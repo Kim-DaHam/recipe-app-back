@@ -1,5 +1,7 @@
 package com.project.recipeapp.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,6 +37,7 @@ public class FridgeController {
 		try {	
 			FridgeEntity entity = FridgeDTO.toEntity(dto);
 			entity.setMember("temporary-userid");
+			entity.setDate(LocalDate.now());
 			
 			List<FridgeEntity> entities = service.create(entity);
 			
