@@ -25,21 +25,24 @@ public class FridgeEntity {
 	@Id
 	@GeneratedValue(generator="system-uuid")
 	@GenericGenerator(name="system-uuid", strategy="uuid")
-	@Column(nullable=false)
-	private String G_KEY;
+	@Column(name="G_KEY", nullable=false)
+	private String key;
 	
-	@Column(nullable=false)
-	private String G_NAME;
+	@Column(name="G_NAME", nullable=false)
+	private String name;
 	
-	private String G_CATEGORY;
+	@Column(name="G_CATEGORY")
+	private String category;
 	
-	private boolean G_CHECK;
+	@Column(name="G_CHECK", nullable=false)
+	private boolean checked;
 	
-	private LocalDate G_EXDATE;
+	@Column(name="G_EXDATE")
+	private LocalDate exdate;
 	
-	@Column(nullable=false)
-	private LocalDate G_DATE;
+	@Column(name="G_DATE", nullable=false)
+	private LocalDate date;
 	
-	@Column(nullable=false)
-	private String G_MEMBER;
+	@Column(name="G_MEMBER", nullable=false)
+	private String member;
 }

@@ -14,31 +14,31 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class FridgeDTO {
-	private String G_KEY;
-	private String G_NAME;
-	private String G_CATEGORY;
-	private boolean G_CHECK;
-	private LocalDate G_EXDATE;
-	private LocalDate G_DATE;
+	private String key;
+	private String name;
+	private String category;
+	private boolean checked;
+	private LocalDate exdate;
+	private LocalDate date;
 	//private String G_MEMBER;
 	
 	public FridgeDTO(final FridgeEntity entity) {
-		this.G_KEY = entity.getG_KEY();
-		this.G_NAME = entity.getG_NAME();
-		this.G_CATEGORY = entity.getG_CATEGORY();
-		this.G_CHECK = entity.isG_CHECK();
-		this.G_EXDATE = entity.getG_EXDATE();
-		this.G_DATE = entity.getG_DATE();
+		this.key = entity.getKey();
+		this.name = entity.getName();
+		this.category = entity.getCategory();
+		this.checked = entity.isChecked();
+		this.exdate = entity.getExdate();
+		this.date = entity.getDate();
 	}
 	
 	public static FridgeEntity toEntity(final FridgeDTO dto) {
 		return FridgeEntity.builder()
-				.G_KEY(dto.getG_KEY())
-				.G_NAME(dto.getG_NAME())
-				.G_CATEGORY(dto.getG_CATEGORY())
-				.G_CHECK(dto.isG_CHECK())
-				.G_EXDATE(dto.getG_EXDATE())
-				.G_DATE(dto.getG_DATE())
+				.key(dto.getKey())
+				.name(dto.getName())
+				.category(dto.getCategory())
+				.checked(dto.isChecked())
+				.exdate(dto.getExdate())
+				.date(dto.getDate())
 				.build();
 	}
 }

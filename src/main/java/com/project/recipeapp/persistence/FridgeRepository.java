@@ -9,5 +9,5 @@ import com.project.recipeapp.model.FridgeEntity;
 
 @Repository
 public interface FridgeRepository extends JpaRepository<FridgeEntity, String>{
-	Optional<FridgeEntity> findByG_KEY(String G_KEY);
+	Optional<FridgeEntity> findByKey(String key);
 }

@@ -20,7 +20,7 @@ public class FridgeService {
 	public Optional<FridgeEntity> create(final FridgeEntity entity){
 		validate(entity);
 		repository.save(entity);
-		return repository.findByG_KEY(entity.getG_KEY());
+		return repository.findByKey(entity.getKey());
 	}
 	
 	public void validate(final FridgeEntity entity) {
@@ -28,7 +28,7 @@ public class FridgeService {
 			log.warn("Entity cannot be null");
 			throw new RuntimeException("Entity cannot be null.");
 		}
-		if(entity.getG_MEMBER()==null) {
+		if(entity.getMember()==null) {
 			log.warn("Unknown user.");
 			throw new RuntimeException("Unknown user.");
 		}
