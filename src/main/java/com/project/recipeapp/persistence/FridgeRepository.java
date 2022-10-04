@@ -1,8 +1,13 @@
 package com.project.recipeapp.persistence;
 
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class FridgeRepository {
+import com.project.recipeapp.model.FridgeEntity;
 
+@Repository
+public interface FridgeRepository extends JpaRepository<FridgeEntity, String>{
+	Optional<FridgeEntity> findByG_KEY(String G_KEY);
 }
