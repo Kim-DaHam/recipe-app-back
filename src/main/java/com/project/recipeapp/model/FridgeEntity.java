@@ -33,6 +33,8 @@ public class FridgeEntity {
 	
 	private String G_CATEGORY;
 	
+	private boolean G_CHECK;
+	
 	private LocalDate G_EXDATE;
 	
 	@Column(nullable=false)
