@@ -6,8 +6,10 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,5 +63,47 @@ public class FridgeController {
 				.<FridgeDTO>builder().data(dtos).build();
 		
 		return ResponseEntity.ok().body(response);
+	}
+	
+	@PutMapping
+	public ResponseEntity<?> updateGrocery(@RequestBody FridgeDTO dto){
+		try {
+			FridgeEntity entity = FridgeDTO.toEntity(dto);
+			entity.setMember("temporary-userid");
+			List<FridgeEntity> entities = service.update(entity);
+			
+			List<FridgeDTO> dtos = entities.stream().map(FridgeDTO::new)
+					.collect(Collectors.toList());
+			
+			FridgeResponseDTO<FridgeDTO> response = FridgeResponseDTO
+					.<FridgeDTO>builder().data(dtos).build();
+			
+			return ResponseEntity.ok().body(response);
+		}catch(Exception e) {
+			String error = e.getMessage();
+			FridgeResponseDTO<FridgeDTO> response = FridgeResponseDTO
+					.<FridgeDTO>builder().error(error).build();
+			return ResponseEntity.badRequest().body(response);
+		}
+	}
+	
+	@DeleteMapping
+	public ResponseEntity<?> deleteGrocery(@RequestBody FridgeDTO dto){
+		try {
+			FridgeEntity entity = FridgeDTO.toEntity(dto);
+			List<FridgeEntity> entities = service.delete(entity);
+			List<FridgeDTO> dtos = entities.stream().map(FridgeDTO::new)
+					.collect(Collectors.toList());
+			
+			FridgeResponseDTO<FridgeDTO> response = FridgeResponseDTO
+					.<FridgeDTO>builder().data(dtos).build();
+			
+			return ResponseEntity.ok().body(response);
+		}catch(Exception e) {
+			String error = e.getMessage();
+			FridgeResponseDTO<FridgeDTO> response = FridgeResponseDTO
+					.<FridgeDTO>builder().error(error).build();
+			return ResponseEntity.badRequest().body(response);
+		}
 	}
 }

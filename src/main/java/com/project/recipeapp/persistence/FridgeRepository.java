@@ -12,4 +12,6 @@ import com.project.recipeapp.model.FridgeEntity;
 public interface FridgeRepository extends JpaRepository<FridgeEntity, String>{
 	Optional<FridgeEntity> findByKey(String key);
 	List<FridgeEntity> findByMember(String member);
+	boolean existsByKey(String key);
+	Optional<FridgeEntity> deleteByKey(String key);
 }

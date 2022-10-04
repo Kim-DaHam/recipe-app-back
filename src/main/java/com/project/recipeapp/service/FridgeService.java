@@ -3,6 +3,8 @@ package com.project.recipeapp.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,29 @@ public class FridgeService {
 	
 	public List<FridgeEntity> retrieve(final String member){
 		return repository.findByMember(member);
+	}
+	
+	public List<FridgeEntity> update(final FridgeEntity entity) {
+		 validate(entity);
+		 final Optional<FridgeEntity> original = repository.findByKey(entity.getKey());
+		 original.ifPresent(grocery -> {
+			 grocery.setName(entity.getName());
+			 grocery.setCategory(entity.getCategory());
+			 grocery.setChecked(entity.isChecked());
+			 repository.save(grocery);
+		 });
+		 
+		 return repository.findByMember(entity.getMember());
+	}
+	
+	@Transactional
+	public List<FridgeEntity> delete(final FridgeEntity entity){
+		if(repository.existsByKey(entity.getKey()))
+			repository.deleteByKey(entity.getKey());
+		else
+			throw new RuntimeException("key does not exist");
+		
+		return repository.findByMember(entity.getMember());
 	}
 	
 	public void validate(final FridgeEntity entity) {
