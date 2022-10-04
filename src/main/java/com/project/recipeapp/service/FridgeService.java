@@ -1,5 +1,6 @@
 package com.project.recipeapp.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,14 @@ public class FridgeService {
 	@Autowired
 	private FridgeRepository repository;
 	
-	public Optional<FridgeEntity> create(final FridgeEntity entity){
+	public List<FridgeEntity> create(final FridgeEntity entity){
 		validate(entity);
 		repository.save(entity);
-		return repository.findByKey(entity.getKey());
+		return repository.findByMember(entity.getMember());
+	}
+	
+	public List<FridgeEntity> retrieve(final String member){
+		return repository.findByMember(member);
 	}
 	
 	public void validate(final FridgeEntity entity) {
