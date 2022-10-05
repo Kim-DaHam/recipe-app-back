@@ -1,5 +1,6 @@
 package com.project.recipeapp.dto;
 
+import com.project.recipeapp.model.MyRecipeEntity;
 import com.project.recipeapp.model.RecipeEntity;
 
 import lombok.AllArgsConstructor;
@@ -32,7 +33,7 @@ public class RecipeDTO {
 				.rname(dto.getRname())
 				.rcontent(dto.getRcontent())
 				.rcategory(dto.getRcategory())
-				.rimage(dto.getRimage());
+				.rimage(dto.getRimage())
 				.build();
 	}
 }
