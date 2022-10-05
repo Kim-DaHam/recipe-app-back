@@ -1,7 +1,5 @@
 package com.project.recipeapp.model;
 
-import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,29 +18,26 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name="T_GROCERY")
-public class FridgeEntity {
+@Table(name="T_MEMBER_RECIPE")
+public class MyRecipeEntity {
 	@Id
 	@GeneratedValue(generator="system-uuid")
 	@GenericGenerator(name="system-uuid", strategy="uuid")
-	@Column(name="G_KEY", nullable=false)
-	private String key;
+	@Column(name="MR_KEY", nullable=false)
+	private String mrkey;
 	
-	@Column(name="G_NAME", nullable=false, length=50)
-	private String name;
+	@Column(name="MR_NAME", nullable=false, length=50)
+	private String mrname;
 	
-	@Column(name="G_CATEGORY", length=20)
-	private String category;
+	@Column(name="MR_CONTENT", nullable=false, length=5000)
+	private String mrcontent;
 	
-	@Column(name="G_CHECK", nullable=false)
-	private boolean checked;
+	@Column(name="MR_CATEGORY", length=10)
+	private String mrcategory;
 	
-	@Column(name="G_EXDATE")
-	private LocalDate exdate;
+	@Column(name="MR_IMAGE", length=50)
+	private String mrimage;
 	
-	@Column(name="G_DATE", nullable=false)
-	private LocalDate date;
-	
-	@Column(name="G_MEMBER", nullable=false)
-	private String member;
+	@Column(name="MR_MEMBER", nullable=false)
+	private String mrmember;
 }
