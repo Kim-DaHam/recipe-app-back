@@ -43,6 +43,8 @@ public class FridgeEntity {
 	@Column(name="G_DATE", nullable=false)
 	private LocalDate date;
 	
+	//@JoinColumn(name="R_MEMBER", nullable=false)
+	//private MemberEntity mkey;
 	@Column(name="G_MEMBER", nullable=false)
 	private String member;
 }

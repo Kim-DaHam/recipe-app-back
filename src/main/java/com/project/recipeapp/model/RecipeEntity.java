@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -42,4 +43,9 @@ public class RecipeEntity {
 	
 	@Column(name="R_DATE", nullable=false)
 	private LocalDate rdate;
+
+	//@JoinColumn(name="R_MEMBER", nullable=false)
+	//private MemberEntity mkey;
+	@Column(name="R_MEMBER", nullable=false)
+	private String member;
 }

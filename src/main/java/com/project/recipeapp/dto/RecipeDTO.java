@@ -1,6 +1,5 @@
 package com.project.recipeapp.dto;
 
-import com.project.recipeapp.model.MyRecipeEntity;
 import com.project.recipeapp.model.RecipeEntity;
 
 import lombok.AllArgsConstructor;
