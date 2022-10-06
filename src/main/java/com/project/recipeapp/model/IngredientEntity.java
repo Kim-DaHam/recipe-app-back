@@ -24,9 +24,12 @@ public class IngredientEntity {
 	@Id
 	@GeneratedValue(generator="system-uuid")
 	@GenericGenerator(name="system-uuid", strategy="uuid")
-	@JoinColumn(name="R_KEY", nullable=false)
-	private RecipeEntity rkey;
+	@Column(name="I_KEY", nullable=false)
+	private String ikey;
 	
 	@Column(name="I_INGREDIENT", nullable=false, length=50)
 	private String ingredient;
+	
+	@JoinColumn(name="R_KEY", nullable=false)
+	private RecipeEntity rkey;
 }

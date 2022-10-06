@@ -2,11 +2,15 @@ package com.project.recipeapp.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.recipeapp.model.FridgeEntity;
+import com.project.recipeapp.model.IngredientEntity;
 import com.project.recipeapp.model.RecipeEntity;
 import com.project.recipeapp.persistence.IngredientRepository;
 import com.project.recipeapp.persistence.RecipeRepository;
@@ -22,11 +26,18 @@ public class RecipeService {
 	@Autowired
 	private IngredientRepository Irepository;
 	
-	public String create(final RecipeEntity entity){
-		String msg = "my recipe is updated.";
+	public List<RecipeEntity> Rcreate(final RecipeEntity entity){
+		List<RecipeEntity> Rlist = new ArrayList();
 		validate(entity);
 		Rrepository.save(entity);
-		return msg;
+		Rlist.addAll(Rrepository.findByMember("admin"));
+		Rlist.addAll(Rrepository.findByMember(entity.getMember()));
+		return Rlist;
+	}
+	
+	public Optional<IngredientEntity> Icreate(final IngredientEntity entity){
+		Irepository.save(entity);
+		return Irepository.findByRkey("1");
 	}
 	
 	public List<RecipeEntity> retrieve(final List<RecipeEntity> entities, final String member){
@@ -38,6 +49,16 @@ public class RecipeService {
 				Rlist.add(entity);
 		});
 		return Rlist;
+	}
+	
+	@Transactional
+	public List<IngredientEntity> delete(final IngredientEntity entity){
+		if(Irepository.existsByIkey(entity.getIkey()))
+			Irepository.deleteByIkey(entity.getIkey());
+		else
+			throw new RuntimeException("key does not exist");
+		
+		return Irepository.findByIkey(entity.getRkey());
 	}
 	
 	public void validate(final RecipeEntity entity) {

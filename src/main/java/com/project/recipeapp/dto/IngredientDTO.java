@@ -13,18 +13,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class IngredientDTO {
-	private RecipeEntity rkey;
+	private String ikey;
 	private String ingredient;
+	private RecipeEntity rkey;
 	
 	public IngredientDTO(final IngredientEntity entity) {
-		this.rkey = entity.getRkey();
+		this.ikey = entity.getIkey();
 		this.ingredient = entity.getIngredient();
+		this.rkey = entity.getRkey();
 	}
 	
 	public static IngredientEntity toEntity(final IngredientDTO dto) {
 		return IngredientEntity.builder()
-				.rkey(dto.getRkey())
+				.ikey(dto.getIkey())
 				.ingredient(dto.getIngredient())
+				.rkey(dto.getRkey())
 				.build();
 	}
 }
