@@ -1,5 +1,6 @@
 package com.project.recipeapp.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,16 @@ public class RecipeService {
 		return msg;
 	}
 	
-	public List<>
+	public List<RecipeEntity> retrieve(final List<RecipeEntity> entities, final String member){
+		List<RecipeEntity> Rlist = new ArrayList();
+		entities.forEach((entity)->{
+			if(entity.getMember() == member)
+				Rlist.add(entity);
+			if(entity.getMember() == "admin")
+				Rlist.add(entity);
+		});
+		return Rlist;
+	}
 	
 	public void validate(final RecipeEntity entity) {
 		if(entity==null) {
