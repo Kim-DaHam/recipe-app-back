@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +30,7 @@ import com.project.recipeapp.service.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("recipe")
 public class RecipeController {
@@ -36,10 +39,10 @@ public class RecipeController {
 	private RecipeService service;
 	
 	@PostMapping
-	public ResponseEntity<?> createRecipe(@RequestBody RecipeDTO dto){
+	public ResponseEntity<?> createRecipe(@AuthenticationPrincipal String userId, @RequestBody RecipeDTO dto){
 		try {
 			RecipeEntity entity = RecipeDTO.toEntity(dto);
-			entity.setRmember("temporary-userid");
+			entity.setRmember(userId);
 			entity.setRdate(LocalDate.now());
 			
 			List<RecipeEntity> entities = service.Rcreate(entity);
@@ -59,10 +62,10 @@ public class RecipeController {
 	}
 	
 	@PostMapping("/ingredient")
-	public ResponseEntity<?> createIngredient(@RequestBody IngredientDTO dto){
+	public ResponseEntity<?> createIngredient(@AuthenticationPrincipal String userId, @RequestBody IngredientDTO dto){
 		try {
 			IngredientEntity entity = IngredientDTO.toEntity(dto);
-			entity.setRkey("temporary-recipeid");
+			entity.setRkey(dto.getRkey());
 			
 			List<IngredientEntity> entities = service.Icreate(entity);
 			
@@ -82,10 +85,9 @@ public class RecipeController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<?> retrieveRecipe(@RequestBody Map<String, String> cate){
-		String tempUserId = "temporary-userid";
+	public ResponseEntity<?> retrieveRecipe(@AuthenticationPrincipal String userId, @RequestBody Map<String, String> cate){
 		String category = cate.get("category");
-		List<RecipeEntity> entities = service.Rretrieve(tempUserId, category);
+		List<RecipeEntity> entities = service.Rretrieve(userId, category);
 		List<RecipeDTO> dtos = entities.stream().map(RecipeDTO::new)
 				.collect(Collectors.toList());
 		RecipeResponseDTO<RecipeDTO> response = RecipeResponseDTO
@@ -95,9 +97,9 @@ public class RecipeController {
 	}
 	
 	@GetMapping("/ingredient")
-	public ResponseEntity<?> retrieveIngredient(@RequestBody String rkey){
-		String tempRecipeId = "temporary-recipeid";
-		List<IngredientEntity> entities = service.Iretrieve(tempRecipeId);
+	public ResponseEntity<?> retrieveIngredient(@AuthenticationPrincipal String userId, @RequestBody Map<String, String> recipeKey){
+		String rkey = recipeKey.get("rkey");
+		List<IngredientEntity> entities = service.Iretrieve(rkey);
 		List<IngredientDTO> dtos = entities.stream().map(IngredientDTO::new)
 				.collect(Collectors.toList());
 		IngredientResponseDTO<IngredientDTO> response = IngredientResponseDTO
@@ -107,11 +109,10 @@ public class RecipeController {
 	}
 	
 	@DeleteMapping("/ingredient")
-	public ResponseEntity<?> deleteIngredient(@RequestBody IngredientDTO dto){
+	public ResponseEntity<?> deleteIngredient(@AuthenticationPrincipal String userId, @RequestBody IngredientDTO dto){
 		try {
-			System.out.println(dto.getIkey());
-			System.out.println(dto.getRkey());
-			List<IngredientEntity> entities = service.Idelete(dto.getIkey(), dto.getRkey());
+			IngredientEntity entity = IngredientDTO.toEntity(dto);
+			List<IngredientEntity> entities = service.Idelete(entity);
 			List<IngredientDTO> dtos = entities.stream().map(IngredientDTO::new)
 					.collect(Collectors.toList());
 			

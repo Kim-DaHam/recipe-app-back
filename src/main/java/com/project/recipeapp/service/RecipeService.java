@@ -75,13 +75,13 @@ public class RecipeService {
 	}
 	
 	@Transactional
-	public List<IngredientEntity> Idelete(final String ikey, final String rkey){
-		if(Irepository.existsByIkey(ikey))
-			Irepository.deleteByIkey(ikey);
+	public List<IngredientEntity> Idelete(final IngredientEntity entity){
+		if(Irepository.existsByIkey(entity.getIkey()))
+			Irepository.deleteByIkey(entity.getIkey());
 		else
 			throw new RuntimeException("key does not exist");
 		
-		return Irepository.findByRkey(rkey);
+		return Irepository.findByRkey(entity.getRkey());
 	}
 	
 	public void validate(final RecipeEntity entity) {
