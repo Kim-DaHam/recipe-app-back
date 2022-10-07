@@ -48,6 +48,12 @@ public class RecipeService {
 		Rlist.addAll(Rrepository.findByRmember(member));
 		return Rlist;
 	}
+	
+	public List<IngredientEntity> Iretrieve(final String rkey){
+		List<IngredientEntity> Ilist = new ArrayList();
+		Ilist.addAll(Irepository.findByRkey(rkey));
+		return Ilist;
+	}
 	/*
 	@Transactional
 	public List<IngredientEntity> delete(final IngredientEntity entity){

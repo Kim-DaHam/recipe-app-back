@@ -90,4 +90,17 @@ public class RecipeController {
 		
 		return ResponseEntity.ok().body(response);
 	}
+	
+	@GetMapping("/ingredient")
+	public ResponseEntity<?> retrieveIngredient(@RequestBody String rkey){
+		String tempRecipeId = "temporary-recipeid";
+		List<IngredientEntity> entities = service.Iretrieve(tempRecipeId);
+		List<IngredientDTO> dtos = entities.stream().map(IngredientDTO::new)
+				.collect(Collectors.toList());
+		IngredientResponseDTO<IngredientDTO> response = IngredientResponseDTO
+				.<IngredientDTO>builder().data(dtos).build();
+		
+		return ResponseEntity.ok().body(response);
+	}
+	
 }
