@@ -11,7 +11,7 @@ import com.project.recipeapp.model.IngredientEntity;
 @Repository
 public interface IngredientRepository extends JpaRepository<IngredientEntity, String>{
 	Optional<IngredientEntity> findByIkey(String key);
-	Optional<IngredientEntity> findByRkey(String key);
+	List<IngredientEntity> findByRkey(String key);
 	List<IngredientEntity> deleteByIkey(String key);
 	boolean existsByIkey(String key);
 }

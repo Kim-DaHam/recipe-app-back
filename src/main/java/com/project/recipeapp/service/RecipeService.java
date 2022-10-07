@@ -35,21 +35,19 @@ public class RecipeService {
 		return Rlist;
 	}
 	
-	public Optional<IngredientEntity> Icreate(final IngredientEntity entity){
+	public List<IngredientEntity> Icreate(final IngredientEntity entity){
 		Irepository.save(entity);
-		return Irepository.findByRkey("1");
-	}
-	/*
-	public List<RecipeEntity> retrieve(final List<RecipeEntity> entities, final String member){
+		return Irepository.findByRkey(entity.getRkey());
+	} 
+	
+	
+	public List<RecipeEntity> Rretrieve(final String member){
 		List<RecipeEntity> Rlist = new ArrayList();
-		entities.forEach((entity)->{
-			if(entity.getRmember() == member)
-				Rlist.add(entity);
-			if(entity.getRmember() == "admin")
-				Rlist.add(entity);
-		});
+		String admin = "admin";
+		Rlist.addAll(Rrepository.findByRmember(admin));
+		Rlist.addAll(Rrepository.findByRmember(member));
 		return Rlist;
-	}*/
+	}
 	/*
 	@Transactional
 	public List<IngredientEntity> delete(final IngredientEntity entity){

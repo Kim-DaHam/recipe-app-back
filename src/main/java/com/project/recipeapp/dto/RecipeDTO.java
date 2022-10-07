@@ -21,7 +21,7 @@ public class RecipeDTO {
 	public RecipeDTO(final RecipeEntity entity) {
 		this.rkey = entity.getRkey();
 		this.rname = entity.getRname();
-		this.rcontent = entity.getRname();
+		this.rcontent = entity.getRcontent();
 		this.rcategory = entity.getRcategory();
 		this.rimage = entity.getRimage();
 	}
