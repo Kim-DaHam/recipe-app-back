@@ -30,6 +30,8 @@ public class IngredientEntity {
 	@Column(name="I_INGREDIENT", nullable=false, length=50)
 	private String ingredient;
 	
-	@JoinColumn(name="R_KEY", nullable=false)
-	private RecipeEntity rkey;
+	//@JoinColumn(name="R_KEY", nullable=false)
+	//private RecipeEntity rkey;
+	@Column(name="R_KEY", nullable=false)
+	private String rkey;
 }

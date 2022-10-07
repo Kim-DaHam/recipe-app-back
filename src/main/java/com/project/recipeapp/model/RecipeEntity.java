@@ -47,5 +47,5 @@ public class RecipeEntity {
 	//@JoinColumn(name="R_MEMBER", nullable=false)
 	//private MemberEntity mkey;
 	@Column(name="R_MEMBER", nullable=false)
-	private String member;
+	private String rmember;
 }

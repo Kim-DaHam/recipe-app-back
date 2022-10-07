@@ -11,5 +11,5 @@ import com.project.recipeapp.model.RecipeEntity;
 
 @Repository
 public interface RecipeRepository extends JpaRepository<RecipeEntity, String>{
-	List<RecipeEntity> findByMember(String member);
+	List<RecipeEntity> findByRmember(String member);
 }

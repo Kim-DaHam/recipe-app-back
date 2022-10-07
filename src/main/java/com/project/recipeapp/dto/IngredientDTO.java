@@ -15,7 +15,8 @@ import lombok.NoArgsConstructor;
 public class IngredientDTO {
 	private String ikey;
 	private String ingredient;
-	private RecipeEntity rkey;
+	//private RecipeEntity rkey;
+	private String rkey;
 	
 	public IngredientDTO(final IngredientEntity entity) {
 		this.ikey = entity.getIkey();

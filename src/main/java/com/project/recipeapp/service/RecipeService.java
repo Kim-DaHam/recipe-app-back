@@ -30,8 +30,8 @@ public class RecipeService {
 		List<RecipeEntity> Rlist = new ArrayList();
 		validate(entity);
 		Rrepository.save(entity);
-		Rlist.addAll(Rrepository.findByMember("admin"));
-		Rlist.addAll(Rrepository.findByMember(entity.getMember()));
+		Rlist.addAll(Rrepository.findByRmember("admin"));
+		Rlist.addAll(Rrepository.findByRmember(entity.getRmember()));
 		return Rlist;
 	}
 	
@@ -39,18 +39,18 @@ public class RecipeService {
 		Irepository.save(entity);
 		return Irepository.findByRkey("1");
 	}
-	
+	/*
 	public List<RecipeEntity> retrieve(final List<RecipeEntity> entities, final String member){
 		List<RecipeEntity> Rlist = new ArrayList();
 		entities.forEach((entity)->{
-			if(entity.getMember() == member)
+			if(entity.getRmember() == member)
 				Rlist.add(entity);
-			if(entity.getMember() == "admin")
+			if(entity.getRmember() == "admin")
 				Rlist.add(entity);
 		});
 		return Rlist;
-	}
-	
+	}*/
+	/*
 	@Transactional
 	public List<IngredientEntity> delete(final IngredientEntity entity){
 		if(Irepository.existsByIkey(entity.getIkey()))
@@ -60,13 +60,13 @@ public class RecipeService {
 		
 		return Irepository.findByIkey(entity.getRkey());
 	}
-	
+	*/
 	public void validate(final RecipeEntity entity) {
 		if(entity==null) {
 			log.warn("Entity cannot be null");
 			throw new RuntimeException("Entity cannot be null.");
 		}
-		if(entity.getMember()==null) {
+		if(entity.getRmember()==null) {
 			log.warn("Unknown user.");
 			throw new RuntimeException("Unknown user.");
 		}
