@@ -54,17 +54,17 @@ public class RecipeService {
 		Ilist.addAll(Irepository.findByRkey(rkey));
 		return Ilist;
 	}
-	/*
+	
 	@Transactional
-	public List<IngredientEntity> delete(final IngredientEntity entity){
-		if(Irepository.existsByIkey(entity.getIkey()))
-			Irepository.deleteByIkey(entity.getIkey());
+	public List<IngredientEntity> Idelete(final String ikey, final String rkey){
+		if(Irepository.existsByIkey(ikey))
+			Irepository.deleteByIkey(ikey);
 		else
 			throw new RuntimeException("key does not exist");
 		
-		return Irepository.findByIkey(entity.getRkey());
+		return Irepository.findByRkey(rkey);
 	}
-	*/
+	
 	public void validate(final RecipeEntity entity) {
 		if(entity==null) {
 			log.warn("Entity cannot be null");

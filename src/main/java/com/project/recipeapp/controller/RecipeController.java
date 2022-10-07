@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -103,4 +104,24 @@ public class RecipeController {
 		return ResponseEntity.ok().body(response);
 	}
 	
+	@DeleteMapping("/ingredient")
+	public ResponseEntity<?> deleteIngredient(@RequestBody IngredientDTO dto){
+		try {
+			System.out.println(dto.getIkey());
+			System.out.println(dto.getRkey());
+			List<IngredientEntity> entities = service.Idelete(dto.getIkey(), dto.getRkey());
+			List<IngredientDTO> dtos = entities.stream().map(IngredientDTO::new)
+					.collect(Collectors.toList());
+			
+			IngredientResponseDTO<IngredientDTO> response = IngredientResponseDTO
+					.<IngredientDTO>builder().data(dtos).build();
+			
+			return ResponseEntity.ok().body(response);
+		}catch(Exception e) {
+			String error = e.getMessage();
+			IngredientResponseDTO<IngredientDTO> response = IngredientResponseDTO
+					.<IngredientDTO>builder().error(error).build();
+			return ResponseEntity.badRequest().body(response);
+		}
+	}
 }
