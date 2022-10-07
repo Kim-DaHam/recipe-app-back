@@ -97,7 +97,8 @@ public class FridgeController {
 			String temporaryUserId = "temporary-userid";
 			List<FridgeEntity> deleteList = new ArrayList();
 			dto.forEach((d)->{
-				deleteList.add(FridgeDTO.toEntity(d));
+				if(dto.size()==1 || d.isChecked())
+					deleteList.add(FridgeDTO.toEntity(d));
 			});
 			List<FridgeEntity> entities = service.delete(deleteList, temporaryUserId);
 			List<FridgeDTO> dtos = entities.stream().map(FridgeDTO::new)
