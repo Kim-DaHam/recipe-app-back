@@ -44,13 +44,15 @@ public class FridgeService {
 	}
 	
 	@Transactional
-	public List<FridgeEntity> delete(final FridgeEntity entity){
-		if(repository.existsByKey(entity.getKey()))
-			repository.deleteByKey(entity.getKey());
-		else
-			throw new RuntimeException("key does not exist");
+	public List<FridgeEntity> delete(final List<FridgeEntity> entities, final String member){
+		entities.forEach((entity)->{
+			if(repository.existsByKey(entity.getKey()))
+				repository.deleteByKey(entity.getKey());
+			else
+				throw new RuntimeException("key does not exist");
+		});
 		
-		return repository.findByMember(entity.getMember());
+		return repository.findByMember(member);
 	}
 	
 	public void validate(final FridgeEntity entity) {

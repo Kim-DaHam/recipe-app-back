@@ -19,8 +19,7 @@ public class FridgeDTO {
 	private String category;
 	private boolean checked;
 	private LocalDate exdate;
-	//private LocalDate date;
-	//private String G_MEMBER;
+	private String member;
 	
 	public FridgeDTO(final FridgeEntity entity) {
 		this.key = entity.getKey();
@@ -28,7 +27,7 @@ public class FridgeDTO {
 		this.category = entity.getCategory();
 		this.checked = entity.isChecked();
 		this.exdate = entity.getExdate();
-		//this.date = entity.getDate();
+		this.member = entity.getMember();
 	}
 	
 	public static FridgeEntity toEntity(final FridgeDTO dto) {
@@ -38,7 +37,7 @@ public class FridgeDTO {
 				.category(dto.getCategory())
 				.checked(dto.isChecked())
 				.exdate(dto.getExdate())
-				//.date(dto.getDate())
+				.member(dto.getMember())
 				.build();
 	}
 }

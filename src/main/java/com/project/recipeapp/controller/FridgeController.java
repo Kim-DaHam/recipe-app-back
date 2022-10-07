@@ -2,6 +2,7 @@ package com.project.recipeapp.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -91,10 +92,14 @@ public class FridgeController {
 	}
 	
 	@DeleteMapping
-	public ResponseEntity<?> deleteGrocery(@RequestBody FridgeDTO dto){
+	public ResponseEntity<?> deleteGrocery(@RequestBody List<FridgeDTO> dto){
 		try {
-			FridgeEntity entity = FridgeDTO.toEntity(dto);
-			List<FridgeEntity> entities = service.delete(entity);
+			String temporaryUserId = "temporary-userid";
+			List<FridgeEntity> deleteList = new ArrayList();
+			dto.forEach((d)->{
+				deleteList.add(FridgeDTO.toEntity(d));
+			});
+			List<FridgeEntity> entities = service.delete(deleteList, temporaryUserId);
 			List<FridgeDTO> dtos = entities.stream().map(FridgeDTO::new)
 					.collect(Collectors.toList());
 			
