@@ -3,6 +3,7 @@ package com.project.recipeapp.controller;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,9 +82,10 @@ public class RecipeController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<?> retrieveRecipe(){
+	public ResponseEntity<?> retrieveRecipe(@RequestBody Map<String, String> cate){
 		String tempUserId = "temporary-userid";
-		List<RecipeEntity> entities = service.Rretrieve(tempUserId);
+		String category = cate.get("category");
+		List<RecipeEntity> entities = service.Rretrieve(tempUserId, category);
 		List<RecipeDTO> dtos = entities.stream().map(RecipeDTO::new)
 				.collect(Collectors.toList());
 		RecipeResponseDTO<RecipeDTO> response = RecipeResponseDTO

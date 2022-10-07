@@ -41,11 +41,30 @@ public class RecipeService {
 	} 
 	
 	
-	public List<RecipeEntity> Rretrieve(final String member){
+	public List<RecipeEntity> Rretrieve(final String member, String category){
 		List<RecipeEntity> Rlist = new ArrayList();
 		String admin = "admin";
-		Rlist.addAll(Rrepository.findByRmember(admin));
-		Rlist.addAll(Rrepository.findByRmember(member));
+		if(category==null) {
+			Rlist.addAll(Rrepository.findByRmember(admin));
+			Rlist.addAll(Rrepository.findByRmember(member));
+		}
+		else {
+			switch(category) {
+			case "아침":
+				Rlist.addAll(Rrepository.findByRmemberAndRcategory(admin, "아침"));
+				Rlist.addAll(Rrepository.findByRmemberAndRcategory(member, "아침"));
+				break;
+			case "점심":
+				Rlist.addAll(Rrepository.findByRmemberAndRcategory(admin, "점심"));
+				Rlist.addAll(Rrepository.findByRmemberAndRcategory(member, "점심"));
+				break;
+			case "저녁":
+				Rlist.addAll(Rrepository.findByRmemberAndRcategory(admin, "저녁"));
+				Rlist.addAll(Rrepository.findByRmemberAndRcategory(member, "저녁"));
+				break;
+			}
+		}
+		
 		return Rlist;
 	}
 	
