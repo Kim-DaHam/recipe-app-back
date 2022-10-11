@@ -3,6 +3,7 @@ package com.project.recipeapp.dto;
 import java.time.LocalDate;
 
 import com.project.recipeapp.model.FridgeEntity;
+import com.project.recipeapp.model.UserEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,7 @@ public class FridgeDTO {
 	private String category;
 	private boolean checked;
 	private LocalDate exdate;
-	private String member;
+	private String mkey;
 	
 	public FridgeDTO(final FridgeEntity entity) {
 		this.key = entity.getKey();
@@ -27,7 +28,7 @@ public class FridgeDTO {
 		this.category = entity.getCategory();
 		this.checked = entity.isChecked();
 		this.exdate = entity.getExdate();
-		this.member = entity.getMember();
+		this.mkey = entity.getMkey();
 	}
 	
 	public static FridgeEntity toEntity(final FridgeDTO dto) {
@@ -37,7 +38,7 @@ public class FridgeDTO {
 				.category(dto.getCategory())
 				.checked(dto.isChecked())
 				.exdate(dto.getExdate())
-				.member(dto.getMember())
+				.mkey(dto.getMkey())
 				.build();
 	}
 }

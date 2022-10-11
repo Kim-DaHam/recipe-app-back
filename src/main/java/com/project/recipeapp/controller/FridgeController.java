@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.recipeapp.dto.FridgeDTO;
 import com.project.recipeapp.dto.FridgeResponseDTO;
 import com.project.recipeapp.model.FridgeEntity;
+import com.project.recipeapp.model.UserEntity;
 import com.project.recipeapp.service.FridgeService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -37,10 +38,10 @@ public class FridgeController {
 	private FridgeService service;
 	
 	@PostMapping
-	public ResponseEntity<?> createGrocery(@AuthenticationPrincipal String userId, @RequestBody FridgeDTO dto){
+	public ResponseEntity<?> createGrocery(@AuthenticationPrincipal String mkey, @RequestBody FridgeDTO dto){
 		try {	
 			FridgeEntity entity = FridgeDTO.toEntity(dto);
-			entity.setMember(userId);
+			entity.setMkey(mkey);
 			entity.setDate(LocalDate.now());
 			
 			List<FridgeEntity> entities = service.create(entity);
@@ -61,8 +62,8 @@ public class FridgeController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<?> retrieveGroceryList(@AuthenticationPrincipal String userId){
-		List<FridgeEntity> entities = service.retrieve(userId);
+	public ResponseEntity<?> retrieveGroceryList(@AuthenticationPrincipal String mkey){
+		List<FridgeEntity> entities = service.retrieve(mkey);
 		List<FridgeDTO> dtos = entities.stream().map(FridgeDTO::new)
 				.collect(Collectors.toList());
 		FridgeResponseDTO<FridgeDTO> response = FridgeResponseDTO
@@ -75,7 +76,7 @@ public class FridgeController {
 	public ResponseEntity<?> updateGrocery(@AuthenticationPrincipal String userId, @RequestBody FridgeDTO dto){
 		try {
 			FridgeEntity entity = FridgeDTO.toEntity(dto);
-			entity.setMember(userId);
+			entity.setMkey(userId);
 			List<FridgeEntity> entities = service.update(entity);
 			
 			List<FridgeDTO> dtos = entities.stream().map(FridgeDTO::new)
@@ -94,14 +95,14 @@ public class FridgeController {
 	}
 	
 	@DeleteMapping
-	public ResponseEntity<?> deleteGrocery(@AuthenticationPrincipal String userId, @RequestBody List<FridgeDTO> dto){
+	public ResponseEntity<?> deleteGrocery(@AuthenticationPrincipal String mkey, @RequestBody List<FridgeDTO> dto){
 		try {
 			List<FridgeEntity> deleteList = new ArrayList();
 			dto.forEach((d)->{
 				if(dto.size()==1 || d.isChecked())
 					deleteList.add(FridgeDTO.toEntity(d));
 			});
-			List<FridgeEntity> entities = service.delete(deleteList, userId);
+			List<FridgeEntity> entities = service.delete(deleteList, mkey);
 			List<FridgeDTO> dtos = entities.stream().map(FridgeDTO::new)
 					.collect(Collectors.toList());
 			

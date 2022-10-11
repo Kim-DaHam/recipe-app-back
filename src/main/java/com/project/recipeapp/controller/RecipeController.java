@@ -25,6 +25,7 @@ import com.project.recipeapp.dto.RecipeDTO;
 import com.project.recipeapp.dto.RecipeResponseDTO;
 import com.project.recipeapp.model.IngredientEntity;
 import com.project.recipeapp.model.RecipeEntity;
+import com.project.recipeapp.model.UserEntity;
 import com.project.recipeapp.service.RecipeService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -39,10 +40,10 @@ public class RecipeController {
 	private RecipeService service;
 	
 	@PostMapping
-	public ResponseEntity<?> createRecipe(@AuthenticationPrincipal String userId, @RequestBody RecipeDTO dto){
+	public ResponseEntity<?> createRecipe(@AuthenticationPrincipal String mkey, @RequestBody RecipeDTO dto){
 		try {
 			RecipeEntity entity = RecipeDTO.toEntity(dto);
-			entity.setRmember(userId);
+			entity.setMkey(mkey);
 			entity.setRdate(LocalDate.now());
 			
 			List<RecipeEntity> entities = service.Rcreate(entity);
@@ -85,9 +86,9 @@ public class RecipeController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<?> retrieveRecipe(@AuthenticationPrincipal String userId, @RequestBody Map<String, String> cate){
+	public ResponseEntity<?> retrieveRecipe(@AuthenticationPrincipal String mkey, @RequestBody Map<String, String> cate){
 		String category = cate.get("category");
-		List<RecipeEntity> entities = service.Rretrieve(userId, category);
+		List<RecipeEntity> entities = service.Rretrieve(mkey, category);
 		List<RecipeDTO> dtos = entities.stream().map(RecipeDTO::new)
 				.collect(Collectors.toList());
 		RecipeResponseDTO<RecipeDTO> response = RecipeResponseDTO
@@ -97,7 +98,7 @@ public class RecipeController {
 	}
 	
 	@GetMapping("/ingredient")
-	public ResponseEntity<?> retrieveIngredient(@AuthenticationPrincipal String userId, @RequestBody Map<String, String> recipeKey){
+	public ResponseEntity<?> retrieveIngredient(@AuthenticationPrincipal UserEntity mkey, @RequestBody Map<String, String> recipeKey){
 		String rkey = recipeKey.get("rkey");
 		List<IngredientEntity> entities = service.Iretrieve(rkey);
 		List<IngredientDTO> dtos = entities.stream().map(IngredientDTO::new)

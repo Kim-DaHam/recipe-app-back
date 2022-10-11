@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.project.recipeapp.model.FridgeEntity;
 import com.project.recipeapp.model.IngredientEntity;
 import com.project.recipeapp.model.RecipeEntity;
+import com.project.recipeapp.model.UserEntity;
 import com.project.recipeapp.persistence.IngredientRepository;
 import com.project.recipeapp.persistence.RecipeRepository;
 
@@ -30,8 +31,8 @@ public class RecipeService {
 		List<RecipeEntity> Rlist = new ArrayList();
 		validate(entity);
 		Rrepository.save(entity);
-		Rlist.addAll(Rrepository.findByRmember("admin"));
-		Rlist.addAll(Rrepository.findByRmember(entity.getRmember()));
+		Rlist.addAll(Rrepository.findByMkey("admin"));
+		Rlist.addAll(Rrepository.findByMkey(entity.getMkey()));
 		return Rlist;
 	}
 	
@@ -41,26 +42,26 @@ public class RecipeService {
 	} 
 	
 	
-	public List<RecipeEntity> Rretrieve(final String member, String category){
+	public List<RecipeEntity> Rretrieve(final String mkey, String category){
 		List<RecipeEntity> Rlist = new ArrayList();
 		String admin = "admin";
 		if(category==null) {
-			Rlist.addAll(Rrepository.findByRmember(admin));
-			Rlist.addAll(Rrepository.findByRmember(member));
+			Rlist.addAll(Rrepository.findByMkey("admin"));
+			Rlist.addAll(Rrepository.findByMkey(mkey));
 		}
 		else {
 			switch(category) {
 			case "아침":
-				Rlist.addAll(Rrepository.findByRmemberAndRcategory(admin, "아침"));
-				Rlist.addAll(Rrepository.findByRmemberAndRcategory(member, "아침"));
+				Rlist.addAll(Rrepository.findByRmemberAndRcategory("admin", "아침"));
+				Rlist.addAll(Rrepository.findByRmemberAndRcategory(mkey, "아침"));
 				break;
 			case "점심":
-				Rlist.addAll(Rrepository.findByRmemberAndRcategory(admin, "점심"));
-				Rlist.addAll(Rrepository.findByRmemberAndRcategory(member, "점심"));
+				Rlist.addAll(Rrepository.findByRmemberAndRcategory("admin", "점심"));
+				Rlist.addAll(Rrepository.findByRmemberAndRcategory(mkey, "점심"));
 				break;
 			case "저녁":
-				Rlist.addAll(Rrepository.findByRmemberAndRcategory(admin, "저녁"));
-				Rlist.addAll(Rrepository.findByRmemberAndRcategory(member, "저녁"));
+				Rlist.addAll(Rrepository.findByRmemberAndRcategory("admin", "저녁"));
+				Rlist.addAll(Rrepository.findByRmemberAndRcategory(mkey, "저녁"));
 				break;
 			}
 		}
@@ -89,7 +90,7 @@ public class RecipeService {
 			log.warn("Entity cannot be null");
 			throw new RuntimeException("Entity cannot be null.");
 		}
-		if(entity.getRmember()==null) {
+		if(entity.getMkey()==null) {
 			log.warn("Unknown user.");
 			throw new RuntimeException("Unknown user.");
 		}

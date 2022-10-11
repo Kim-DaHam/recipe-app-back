@@ -8,9 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import com.project.recipeapp.model.IngredientEntity;
 import com.project.recipeapp.model.RecipeEntity;
+import com.project.recipeapp.model.UserEntity;
 
 @Repository
 public interface RecipeRepository extends JpaRepository<RecipeEntity, String>{
-	List<RecipeEntity> findByRmember(String member);
-	List<RecipeEntity> findByRmemberAndRcategory(String member, String categorty);
+	List<RecipeEntity> findByMkey(String mkey);
+	List<RecipeEntity> findByRmemberAndRcategory(String mkey, String categorty);
 }

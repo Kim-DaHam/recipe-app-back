@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -43,8 +45,9 @@ public class FridgeEntity {
 	@Column(name="G_DATE", nullable=false)
 	private LocalDate date;
 	
+	//@ManyToOne
 	//@JoinColumn(name="R_MEMBER", nullable=false)
-	//private MemberEntity mkey;
+	//private UserEntity mkey;
 	@Column(name="G_MEMBER", nullable=false)
-	private String member;
+	private String mkey;
 }
