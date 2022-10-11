@@ -2,6 +2,8 @@ package com.project.recipeapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,13 +29,16 @@ public class UserController {
     @Autowired 
     private TokenProvider tokenProvider;
     
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    
     @PostMapping("/signup") 
     public ResponseEntity<?>registerUser(@RequestBody UserDTO userDTO){ 
         try {
             UserEntity user = UserEntity.builder()
                 .memail(userDTO.getMemail()) 
                 .mname(userDTO.getMname())
-                .mpw(userDTO.getMpw()) 
+                .mpw(userDTO.getMpw())
+                .mpw(passwordEncoder.encode(userDTO.getMpw()))
                 .build();
 
             UserEntity registeredUser = userService.create(user);
@@ -51,7 +56,10 @@ public class UserController {
 
     @PostMapping("/signin") 
     public ResponseEntity<?>authenticate(@RequestBody UserDTO userDTO){
-        UserEntity user = userService.getByCredentials(userDTO.getMemail(),userDTO.getMpw());
+        UserEntity user = userService.getByCredentials(
+        		userDTO.getMemail(),
+        		userDTO.getMpw(),
+        		passwordEncoder);
         
         if(user !=null){ final String token = tokenProvider.create(user);
                         final UserDTO responseUserDTO = UserDTO.builder()

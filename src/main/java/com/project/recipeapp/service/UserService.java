@@ -1,6 +1,7 @@
 package com.project.recipeapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.recipeapp.model.UserEntity;
@@ -26,7 +27,12 @@ public class UserService {
         
         return userRepository.save(userEntity);
     } 
-    public UserEntity getByCredentials(final String email, final String password) { 
-        return userRepository.findByMemailAndMpw(email, password);
+    public UserEntity getByCredentials(final String email, final String password, final PasswordEncoder encoder) { 
+        final UserEntity originalUser = userRepository.findByMemail(email);
+        
+        if(originalUser != null && encoder.matches(password, originalUser.getMpw())) {
+        	return originalUser;
+        }
+        return null;
     } 
 }
