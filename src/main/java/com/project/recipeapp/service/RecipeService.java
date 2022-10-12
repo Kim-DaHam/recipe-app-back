@@ -52,16 +52,16 @@ public class RecipeService {
 		else {
 			switch(category) {
 			case "아침":
-				Rlist.addAll(Rrepository.findByRmemberAndRcategory("admin", "아침"));
-				Rlist.addAll(Rrepository.findByRmemberAndRcategory(mkey, "아침"));
+				Rlist.addAll(Rrepository.findByMkeyAndRcategory("admin", "아침"));
+				Rlist.addAll(Rrepository.findByMkeyAndRcategory(mkey, "아침"));
 				break;
 			case "점심":
-				Rlist.addAll(Rrepository.findByRmemberAndRcategory("admin", "점심"));
-				Rlist.addAll(Rrepository.findByRmemberAndRcategory(mkey, "점심"));
+				Rlist.addAll(Rrepository.findByMkeyAndRcategory("admin", "점심"));
+				Rlist.addAll(Rrepository.findByMkeyAndRcategory(mkey, "점심"));
 				break;
 			case "저녁":
-				Rlist.addAll(Rrepository.findByRmemberAndRcategory("admin", "저녁"));
-				Rlist.addAll(Rrepository.findByRmemberAndRcategory(mkey, "저녁"));
+				Rlist.addAll(Rrepository.findByMkeyAndRcategory("admin", "저녁"));
+				Rlist.addAll(Rrepository.findByMkeyAndRcategory(mkey, "저녁"));
 				break;
 			}
 		}
