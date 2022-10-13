@@ -36,9 +36,8 @@ public class UserService {
         }
         return null;
     }
-    
-    public Boolean emailRetrieve(final String email) {
-    	final Boolean isEmailExits = userRepository.existsByMemail(email);
+    public boolean emailCheck(final String email) {
+    	final boolean isEmailExits = userRepository.existsByMemail(email);
     	return isEmailExits;
     }
 }

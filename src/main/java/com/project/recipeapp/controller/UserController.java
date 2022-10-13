@@ -85,10 +85,8 @@ public class UserController {
     }
     
     @PostMapping("/emailcheck")
-    public Boolean checkEmailDuplicate(@RequestBody Map<String, String> uemail){
-    	String email = uemail.get("email");
-    	Boolean isAlreadyExist = userService.emailRetrieve(email);
-		
+    public boolean checkEmailDuplicate(@RequestBody String email){
+    	boolean isAlreadyExist = userService.emailCheck(email);
 		return isAlreadyExist;
     }
 }

@@ -8,6 +8,6 @@ import com.project.recipeapp.model.UserEntity;
 @Repository 
 public interface UserRepository extends JpaRepository<UserEntity, String>{ 
     UserEntity findByMemail(String email);
-    Boolean existsByMemail(String email);
     UserEntity findByMemailAndMpw(String email, String password);
+    boolean existsByMemail(String email);
 }
