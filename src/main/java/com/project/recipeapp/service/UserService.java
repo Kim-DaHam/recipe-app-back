@@ -27,6 +27,7 @@ public class UserService {
         
         return userRepository.save(userEntity);
     } 
+    
     public UserEntity getByCredentials(final String email, final String password, final PasswordEncoder encoder) { 
         final UserEntity originalUser = userRepository.findByMemail(email);
         
@@ -34,5 +35,10 @@ public class UserService {
         	return originalUser;
         }
         return null;
-    } 
+    }
+    
+    public Boolean emailRetrieve(final String email) {
+    	final Boolean isEmailExits = userRepository.existsByMemail(email);
+    	return isEmailExits;
+    }
 }

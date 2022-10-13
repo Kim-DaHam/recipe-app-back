@@ -1,5 +1,9 @@
 package com.project.recipeapp.controller;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -10,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.recipeapp.dto.RecipeDTO;
+import com.project.recipeapp.dto.RecipeResponseDTO;
 import com.project.recipeapp.dto.ResponseDTO;
 import com.project.recipeapp.dto.UserDTO;
+import com.project.recipeapp.model.RecipeEntity;
 import com.project.recipeapp.model.UserEntity;
 import com.project.recipeapp.security.TokenProvider;
 import com.project.recipeapp.service.UserService;
@@ -75,5 +82,13 @@ public class UserController {
                 .build();
             return ResponseEntity.badRequest().body(responseDTO);
         }
+    }
+    
+    @PostMapping("/emailcheck")
+    public Boolean checkEmailDuplicate(@RequestBody Map<String, String> uemail){
+    	String email = uemail.get("email");
+    	Boolean isAlreadyExist = userService.emailRetrieve(email);
+		
+		return isAlreadyExist;
     }
 }
