@@ -1,6 +1,7 @@
 package com.project.recipeapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,6 @@ public class UserService {
     
     public UserEntity getByCredentials(final String email, final String password, final PasswordEncoder encoder) { 
         final UserEntity originalUser = userRepository.findByMemail(email);
-        
         if(originalUser != null && encoder.matches(password, originalUser.getMpw())) {
         	return originalUser;
         }
