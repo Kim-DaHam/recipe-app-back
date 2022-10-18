@@ -1,17 +1,26 @@
 package com.project.recipeapp.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.recipeapp.dto.FridgeDTO;
+import com.project.recipeapp.dto.FridgeResponseDTO;
 import com.project.recipeapp.dto.ResponseDTO;
 import com.project.recipeapp.dto.UserDTO;
+import com.project.recipeapp.model.FridgeEntity;
 import com.project.recipeapp.model.UserEntity;
 import com.project.recipeapp.security.TokenProvider;
 import com.project.recipeapp.service.UserService;
@@ -30,6 +39,16 @@ public class UserController {
     private TokenProvider tokenProvider;
     
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    
+    @GetMapping
+    public ResponseEntity<?> getUserName(@AuthenticationPrincipal String mkey) {
+    	List<String> msg = new ArrayList<>();
+    	String uname = userService.getuname(mkey);
+		msg.add(uname);
+		ResponseDTO<String> response = 
+				ResponseDTO.<String>builder().data(msg).build();
+				return ResponseEntity.ok().body(response);
+    }
     
     @PostMapping("/signup") 
     public ResponseEntity<?>registerUser(@RequestBody UserDTO userDTO){

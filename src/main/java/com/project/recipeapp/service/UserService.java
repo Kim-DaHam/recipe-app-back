@@ -16,6 +16,12 @@ public class UserService {
     @Autowired 
     private UserRepository userRepository;
     
+    public String getuname(final String mkey) {
+    	UserEntity user = userRepository.findByMkey(mkey);
+    	String uname = user.getMname();
+    	return uname;
+    }
+    
     public UserEntity create(final UserEntity userEntity) { 
         if(userEntity == null || userEntity.getMemail() == null) { 
             throw new RuntimeException("Invalid arguments");

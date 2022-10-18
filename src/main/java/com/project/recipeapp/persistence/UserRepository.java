@@ -6,7 +6,8 @@ import org.springframework.stereotype.Repository;
 import com.project.recipeapp.model.UserEntity;
 
 @Repository 
-public interface UserRepository extends JpaRepository<UserEntity, String>{ 
+public interface UserRepository extends JpaRepository<UserEntity, String>{
+	UserEntity findByMkey(String mkey);
     UserEntity findByMemail(String email);
     UserEntity findByMemailAndMpw(String email, String password);
     boolean existsByMemail(String email);
