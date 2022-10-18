@@ -86,9 +86,8 @@ public class RecipeController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<?> retrieveRecipe(@AuthenticationPrincipal String mkey, @RequestBody Map<String, String> cate){
-		String category = cate.get("category");
-		List<RecipeEntity> entities = service.Rretrieve(mkey, category);
+	public ResponseEntity<?> retrieveRecipe(@AuthenticationPrincipal String mkey){
+		List<RecipeEntity> entities = service.Rretrieve(mkey, "아침");
 		List<RecipeDTO> dtos = entities.stream().map(RecipeDTO::new)
 				.collect(Collectors.toList());
 		RecipeResponseDTO<RecipeDTO> response = RecipeResponseDTO

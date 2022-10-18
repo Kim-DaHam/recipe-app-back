@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.recipeapp.dto.FridgeDTO;
 import com.project.recipeapp.model.FridgeEntity;
 import com.project.recipeapp.model.IngredientEntity;
 import com.project.recipeapp.model.RecipeEntity;
@@ -44,8 +45,8 @@ public class RecipeService {
 	
 	public List<RecipeEntity> Rretrieve(final String mkey, String category){
 		List<RecipeEntity> Rlist = new ArrayList();
-		String admin = "admin";
-		if(category==null) {
+
+		if(category=="null") {
 			Rlist.addAll(Rrepository.findByMkey("admin"));
 			Rlist.addAll(Rrepository.findByMkey(mkey));
 		}
